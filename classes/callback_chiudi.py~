@@ -1,0 +1,6 @@
+import gtk
+
+class callback_chiudi:
+    def chiudi(self, widget):
+        gtk.main_quit()
+        

@@ -1,0 +1,14 @@
+#------------------------------------------------------------------------------
+#
+# PPP: class class_chiudi
+#
+#------------------------------------------------------------------------------
+
+# Import built-in lib
+import gtk
+
+class class_chiudi:
+    def chiudi(self, widget):
+        print "PPP send destroy signal"
+        gtk.main_quit()
+

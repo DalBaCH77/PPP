@@ -1,0 +1,33 @@
+#
+
+#------------------------------------------------------------------------------
+#
+# PPP: GUI
+#
+#------------------------------------------------------------------------------
+
+# Import built-in lib
+import sys
+try:
+    import pygtk
+    pygtk.require('2.0')
+except:
+    pass
+try:
+    import gtk
+except:
+    print 'GTK not available'
+    sys.exit(1)
+
+# Import personal class
+
+#------------------------------------------------------------------------------
+# GUI class
+#------------------------------------------------------------------------------
+
+class interfaccia:
+    
+    def __init__(self):
+        
+        # Main Window
+        finestra = gtk.Window(WINDOW_TOPLEVEL)
