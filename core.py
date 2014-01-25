@@ -23,12 +23,16 @@ except:
 from callback_chiudi import ClassChiudi
 from callback_status import ClassStatus
 from callback_conversione import ClassConversione
+from callback_formattazione import ClassFormattazione
 
 #------------------------------------------------------------------------------
 # GUI class
 #------------------------------------------------------------------------------
 
-class ClassInterfaccia(ClassChiudi, ClassStatus, ClassConversione):
+class ClassInterfaccia(ClassChiudi, 
+                       ClassStatus, 
+                       ClassConversione, 
+                       ClassFormattazione):
     """Class to define caracteristics of the program window system"""
 
     def __init__(self):
@@ -92,47 +96,78 @@ class ClassInterfaccia(ClassChiudi, ClassStatus, ClassConversione):
 
         # Set treestore
         self.lista = []
-            # progressivo(int)
-            # codice(str)
-            # descrizione(str)
-            # um(str)
-            # qta(float)
-            # pu(float) 
-#        self.treestore = gtk.TreeStore(int, str, str, str, float, float)
-        self.treestore = gtk.TreeStore(str, str, str, str, str, str)
+        self.archivio = gtk.TreeStore(int, str, str, str, str, str, str, str)
 #        for i in range(len(self.lista)):
-#            self.treestore.append(None, [self.lista[i]])
-        self.treeview = gtk.TreeView(self.treestore)
-        colonna_progr = gtk.TreeViewColumn("Progressivo")
-        colonna_cod = gtk.TreeViewColumn("Codice")
-        colonna_desc = gtk.TreeViewColumn("Descrizione")
-        colonna_um = gtk.TreeViewColumn("Unità di misura")
-        colonna_qta = gtk.TreeViewColumn("Quantità")
-        colonna_pu = gtk.TreeViewColumn("Prezzo unitario")
-        self.treeview.append_column(colonna_progr)
-        self.treeview.append_column(colonna_cod)
-        self.treeview.append_column(colonna_desc)
-        self.treeview.append_column(colonna_um)
-        self.treeview.append_column(colonna_qta)
-        self.treeview.append_column(colonna_pu)
-        cell = gtk.CellRendererText()
-        colonna_progr.pack_start(cell, True)
-        colonna_progr.add_attribute(cell, "text", 0)
-        colonna_cod.pack_start(cell, True)
-        colonna_cod.add_attribute(cell, "text", 1)
-        colonna_desc.pack_start(cell, True)
-        colonna_desc.add_attribute(cell, "text", 2)
-        colonna_um.pack_start(cell, True)
-        colonna_um.add_attribute(cell, "text", 3)
-        colonna_qta.pack_start(cell, True)
-        colonna_qta.add_attribute(cell, "text", 4)
-        colonna_pu.pack_start(cell, True)
-        colonna_pu.add_attribute(cell, "text", 5)
+#            self.archivio.append(None, [self.lista[i]])
+        self.griglia = gtk.TreeView(self.archivio)
+        self.colonna_progr = gtk.TreeViewColumn("N")
+        self.colonna_cod = gtk.TreeViewColumn("Codice")
+        self.colonna_desc = gtk.TreeViewColumn("Descrizione")
+        self.colonna_um = gtk.TreeViewColumn("U.M.")
+        self.colonna_qta = gtk.TreeViewColumn("Quantità")
+        self.colonna_pu = gtk.TreeViewColumn("Prezzo")
+        self.colonna_imp = gtk.TreeViewColumn("Importo")
 
-        self.treeview.show()
+        self.griglia.append_column(self.colonna_progr)
+        self.griglia.append_column(self.colonna_cod)
+        self.griglia.append_column(self.colonna_desc)
+        self.griglia.append_column(self.colonna_um)
+        self.griglia.append_column(self.colonna_qta)
+        self.griglia.append_column(self.colonna_pu)
+        self.griglia.append_column(self.colonna_imp)
+
+        self.cella_progressivo = gtk.CellRendererText()
+        self.cella_progressivo.set_property('xalign',0.5)
+
+        self.cella_codice = gtk.CellRendererText()
+
+        self.cella_descrizione = gtk.CellRendererText()
+
+        self.cella_unitamisura = gtk.CellRendererText()
+        self.cella_unitamisura.set_property('xalign',1) 
+
+        self.cella_quantita = gtk.CellRendererText()
+        self.cella_quantita.set_property('xalign',1) 
+
+        self.cella_prezzo = gtk.CellRendererText()
+        self.cella_prezzo.set_property('xalign',1) 
+
+        self.cella_importo = gtk.CellRendererText()
+        self.cella_importo.set_property('xalign',1) 
+
+        self.colonna_progr.pack_start(self.cella_progressivo, True)
+        self.colonna_progr.add_attribute(self.cella_progressivo, "text", 0)
+        self.colonna_progr.set_sort_column_id(0)
+
+        self.colonna_cod.pack_start(self.cella_codice, True)
+        self.colonna_cod.add_attribute(self.cella_codice, "text", 1)
+        self.colonna_cod.set_sort_column_id(1)
+        self.colonna_cod.add_attribute(self.cella_codice, "cell-background", 7)
+
+        self.colonna_desc.pack_start(self.cella_descrizione, True)
+        self.colonna_desc.add_attribute(self.cella_descrizione, "text", 2)
+        self.colonna_desc.set_sort_column_id(2)
+
+        self.colonna_um.pack_start(self.cella_unitamisura, True)
+        self.colonna_um.add_attribute(self.cella_unitamisura, "text", 3)
+        self.colonna_um.set_sort_column_id(3)
+
+        self.colonna_qta.pack_start(self.cella_quantita, True)
+        self.colonna_qta.add_attribute(self.cella_quantita, "text", 4)
+        self.colonna_qta.set_sort_column_id(4)
+
+        self.colonna_pu.pack_start(self.cella_prezzo, True)
+        self.colonna_pu.add_attribute(self.cella_prezzo, "text", 5)
+        self.colonna_pu.set_sort_column_id(5)
+
+        self.colonna_imp.pack_start(self.cella_importo, True)
+        self.colonna_imp.add_attribute(self.cella_importo, "text", 6)
+        self.colonna_imp.set_sort_column_id(6)
+
+        self.griglia.show()
 
         # Add tree to scrolled window
-        self.scorrevole.add_with_viewport(self.treeview)
+        self.scorrevole.add_with_viewport(self.griglia)
 
         # Show scrolled window
         self.scorrevole.show()
