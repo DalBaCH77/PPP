@@ -7,17 +7,11 @@
 
 # Import built-in lib
 import gtk
-from mimetypes import guess_type
-
-# Import personal class
-from callback_chiudi import ClassChiudi
-from callback_status import ClassStatus
-from callback_filechooser import ClassScelta
-from xlrd import open_workbook
-from callback_messaggi import ClassMessaggi
 from decimal import Decimal
 
-class ClassFormattazione(ClassChiudi, ClassStatus, ClassScelta, ClassMessaggi):
+# Import personal class
+
+class ClassFormattazione():
     """Class to store various format for treeview"""
 
     def valuta_euro(self, data):
